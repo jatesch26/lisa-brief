@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trip Brief · Lisa Tesch · F9 3476 · Apr 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1a7a3a;--green-l:#e8f5ed;--green-m:#2d9e55;
+  --navy:#0f1b2d;--slate:#2c3e50;--mid:#5a6a7a;--light:#94a3b0;
+  --border:#e2e8ee;--bg:#f4f6f8;--white:#fff;
+  --amber:#d97706;--amber-l:#fef3c7;
+  --red:#c0392b;--red-l:#fdecea;
+  --blue:#1a6fa8;--blue-l:#e8f2fa;
+  --r:12px;--r-sm:8px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--navy);min-height:100vh;padding-bottom:48px}
+.mono{font-family:'DM Mono',monospace}
+
+/* ── HEADER ── */
+.header{background:var(--navy);color:#fff;padding:28px 20px 32px;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:22px;background:var(--bg);border-radius:22px 22px 0 0}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
+.airline-badge{background:var(--green-m);color:#fff;font-size:11px;font-weight:600;letter-spacing:.08em;padding:5px 10px;border-radius:20px;text-transform:uppercase}
+.status-badge{background:rgba(255,255,255,.12);color:#7fff9a;font-size:11px;font-weight:500;padding:5px 10px;border-radius:20px;display:flex;align-items:center;gap:5px}
+.status-dot{width:7px;height:7px;background:#7fff9a;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.route-row{display:flex;align-items:center;margin-bottom:8px}
+.airport-code{font-family:'DM Mono',monospace;font-size:44px;font-weight:500;color:#fff;line-height:1;letter-spacing:-.02em}
+.route-line{flex:1;display:flex;flex-direction:column;align-items:center;padding:0 14px;gap:4px}
+.route-dash{width:100%;height:1px;background:rgba(255,255,255,.25);position:relative}
+.route-dash::after{content:'✈';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--navy);padding:0 6px;font-size:15px;color:rgba(255,255,255,.5)}
+.flight-num-small{font-size:11px;color:rgba(255,255,255,.45);font-family:'DM Mono',monospace;letter-spacing:.05em}
+.airport-name{font-size:11px;color:rgba(255,255,255,.4);font-weight:300;margin-top:2px}
+.header-meta{display:flex;gap:18px;flex-wrap:wrap}
+.meta-item{display:flex;flex-direction:column;gap:2px}
+.meta-label{font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em}
+.meta-value{font-size:13.5px;font-family:'DM Mono',monospace;color:rgba(255,255,255,.9);font-weight:500}
+
+/* ── LAYOUT ── */
+.container{max-width:500px;margin:0 auto;padding:20px 16px}
+.section-label{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--light);font-weight:600;padding:4px 0 8px}
+
+/* ── CARDS ── */
+.card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;margin-bottom:12px}
+.card-header{padding:14px 18px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.card-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.card-icon.green{background:var(--green-l)}
+.card-icon.amber{background:var(--amber-l)}
+.card-icon.blue{background:var(--blue-l)}
+.card-icon.slate{background:#eef0f2}
+.card-icon.red{background:var(--red-l)}
+.card-title{font-size:13px;font-weight:600;color:var(--navy);letter-spacing:.01em}
+.card-body{padding:14px 18px}
+
+/* ── HIGHLIGHT ── */
+.highlight{background:var(--green-l);border:1px solid #b3d9c0;border-radius:var(--r-sm);padding:14px 16px;margin-bottom:12px}
+.highlight-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--green);margin-bottom:4px}
+.highlight-val{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--green);line-height:1;margin-bottom:3px}
+.highlight-sub{font-size:12.5px;color:#3a7a50}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:grid;grid-template-columns:68px 1px 1fr;gap:0 14px}
+.tl-time{font-family:'DM Mono',monospace;font-size:12.5px;font-weight:500;color:var(--slate);text-align:right;padding:10px 0;line-height:1.2}
+.tl-time small{display:block;font-size:10px;color:var(--light);font-weight:400}
+.tl-spine{display:flex;flex-direction:column;align-items:center}
+.tl-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--green-m);background:#fff;flex-shrink:0;margin-top:13px;position:relative;z-index:1}
+.tl-dot.filled{background:var(--green-m)}
+.tl-dot.key{width:12px;height:12px;border:2.5px solid var(--green);background:var(--green-l);margin-top:12px}
+.tl-dot.warn{border-color:var(--amber);background:var(--amber-l)}
+.tl-line{flex:1;width:1px;background:var(--border)}
+.tl-item:last-child .tl-line{display:none}
+.tl-content{padding:8px 0 8px}
+.tl-label{font-size:13px;font-weight:500;color:var(--navy);line-height:1.3;margin-bottom:2px}
+.tl-sub{font-size:11.5px;color:var(--mid);line-height:1.45}
+.tl-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-top:4px;letter-spacing:.03em}
+.tl-badge.green{background:var(--green-l);color:var(--green)}
+.tl-badge.amber{background:var(--amber-l);color:var(--amber)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip{font-size:11.5px;font-family:'DM Mono',monospace;padding:4px 10px;border-radius:20px;font-weight:500}
+.chip.green{background:var(--green-l);color:var(--green)}
+.chip.navy{background:#e8edf2;color:var(--slate)}
+.chip.amber{background:var(--amber-l);color:var(--amber)}
+
+/* ── ROWS ── */
+.row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);gap:12px}
+.row:last-child{border-bottom:none;padding-bottom:0}
+.row:first-child{padding-top:0}
+.row-label{font-size:12px;color:var(--mid);font-weight:400;flex-shrink:0;padding-top:1px;min-width:90px}
+.row-value{font-size:13px;font-weight:500;color:var(--navy);text-align:right;line-height:1.45}
+.row-value.mono{font-family:'DM Mono',monospace;font-size:12.5px}
+.row-value.green{color:var(--green)}
+.row-value.amber{color:var(--amber)}
+.row-value.red{color:var(--red)}
+
+/* ── TRANSPORT TABS ── */
+.tab-bar{display:flex;gap:8px;margin-bottom:12px}
+.tab-btn{flex:1;padding:10px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--mid);cursor:pointer;transition:all .15s}
+.tab-btn.active{border-color:var(--green-m);background:var(--green-l);color:var(--green)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── STEPS ── */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #f0f3f6}
+.step:last-child{border-bottom:none;padding-bottom:0}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--green-m);color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-body{flex:1}
+.step-title{font-size:13px;font-weight:500;color:var(--navy);line-height:1.3}
+.step-sub{font-size:11.5px;color:var(--mid);line-height:1.45;margin-top:2px}
+.step-tip{font-size:11px;color:var(--green);font-weight:500;margin-top:3px}
+
+.step-num.uber{background:var(--navy)}
+
+/* ── OPTION HEADER ── */
+.opt-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;border-radius:var(--r-sm);border:1px solid var(--border)}
+.opt-icon{font-size:20px}
+.opt-title{font-size:14px;font-weight:600;color:var(--navy)}
+.opt-badge{margin-left:auto;font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;letter-spacing:.03em}
+.opt-badge.free{background:var(--green-l);color:var(--green)}
+.opt-badge.paid{background:#f0f3f6;color:var(--mid)}
+
+/* ── PHONE LINK ── */
+.phone-link{display:flex;align-items:center;gap:10px;background:var(--blue-l);border:1px solid #b8d8f0;border-radius:var(--r-sm);padding:12px 14px;text-decoration:none;margin-top:10px}
+.phone-link-icon{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.phone-link-text{flex:1}
+.phone-link-label{font-size:10px;color:var(--blue);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.phone-link-num{font-family:'DM Mono',monospace;font-size:15px;color:var(--navy);font-weight:500}
+.phone-link-sub{font-size:11px;color:var(--mid)}
+
+/* ── WEATHER ── */
+.wx-narrative{font-size:13px;color:var(--slate);line-height:1.7;margin-bottom:14px}
+.wx-narrative strong{font-weight:600;color:var(--navy)}
+.wx-narrative em{color:var(--green);font-style:normal;font-weight:500}
+.wx-narrative .warn{color:var(--amber);font-weight:500}
+.wx-narrative .cold{color:var(--blue);font-weight:500}
+
+.wx-chart-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 12px 8px;margin-bottom:12px}
+.wx-chart-title{font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.wx-legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.wx-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--mid)}
+.wx-swatch{width:10px;height:10px;border-radius:2px}
+
+.wx-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.wx-card{background:var(--bg);border-radius:var(--r-sm);padding:12px 14px;border:1px solid var(--border)}
+.wx-city{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--light);margin-bottom:6px;font-weight:500}
+.wx-temp{font-family:'DM Mono',monospace;font-size:30px;font-weight:500;color:var(--navy);line-height:1;margin-bottom:4px}
+.wx-desc{font-size:11.5px;color:var(--mid);line-height:1.3;margin-bottom:8px}
+.wx-row{font-size:11px;color:var(--light);display:flex;justify-content:space-between;margin-top:3px}
+.wx-row span{color:var(--mid);font-weight:500}
+
+.day-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);gap:8px}
+.day-row:last-child{border-bottom:none}
+.day-name{font-size:12px;font-weight:500;color:var(--navy);min-width:70px}
+.day-bar-wrap{flex:1;position:relative;height:6px;background:#eef0f2;border-radius:3px;overflow:hidden}
+.day-bar{position:absolute;left:0;top:0;height:100%;border-radius:3px;transition:width .4s}
+.day-precip-label{font-size:11px;font-family:'DM Mono',monospace;min-width:36px;text-align:right;font-weight:500}
+.day-temp-label{font-size:11px;font-family:'DM Mono',monospace;min-width:60px;text-align:right;color:var(--mid)}
+
+.weather-band{display:flex;border-radius:var(--r-sm);overflow:hidden;margin-bottom:14px}
+.weather-hour{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 2px 6px}
+.wh-time{font-size:9px;color:var(--light);margin-bottom:4px;font-weight:500}
+.wh-temp{font-size:11px;font-family:'DM Mono',monospace;font-weight:500;margin-bottom:4px;color:var(--navy)}
+.wh-icon{font-size:13px;margin-bottom:4px}
+.wh-precip{font-size:9px;color:var(--mid);font-weight:600}
+.weather-hour.highlight-hour{background:rgba(45,158,85,.08);border-top:2px solid var(--green-m)}
+.weather-hour.rain-hour{background:rgba(26,111,168,.06);border-top:2px solid var(--blue)}
+
+/* ── RETURN BANNER ── */
+.return-banner{background:#fff8e1;border:1px solid #ffe082;border-radius:var(--r-sm);padding:14px 16px;margin-bottom:12px}
+.return-title{font-size:12px;font-weight:600;color:#8a6200;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.return-body{font-size:12.5px;color:#7a5a00;line-height:1.6}
+
+.alert-box{background:var(--amber-l);border:1px solid #f5d48a;border-radius:var(--r-sm);padding:12px 14px;margin-bottom:12px;display:flex;gap:10px;align-items:flex-start}
+.alert-icon{font-size:16px;flex-shrink:0}
+.alert-text{font-size:12.5px;color:#7a5800;line-height:1.5}
+.alert-text strong{font-weight:600}
+
+.footer{text-align:center;padding:20px 16px 0;font-size:11px;color:var(--light);line-height:1.7}
+.footer strong{color:var(--mid)}
+
+/* Chart container */
+.chart-container{position:relative;width:100%}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="airline-badge">Frontier Airlines</div>
+    <div class="status-badge"><div class="status-dot"></div>On Time</div>
+  </div>
+  <div class="route-row">
+    <div>
+      <div class="airport-code mono">GRR</div>
+      <div class="airport-name">Grand Rapids</div>
+    </div>
+    <div class="route-line">
+      <div class="route-dash"></div>
+      <div class="flight-num-small">F9 3476</div>
+    </div>
+    <div style="text-align:right">
+      <div class="airport-code mono">MCO</div>
+      <div class="airport-name" style="text-align:right">Orlando</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="meta-item"><div class="meta-label">Date</div><div class="meta-value">Fri Apr 3, 2026</div></div>
+    <div class="meta-item"><div class="meta-label">Departs</div><div class="meta-value">7:47 PM EDT</div></div>
+    <div class="meta-item"><div class="meta-label">Arrives</div><div class="meta-value">~10:49 PM EDT</div></div>
+    <div class="meta-item"><div class="meta-label">Aircraft</div><div class="meta-value">A320neo</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- READY TIME -->
+  <div style="margin:4px 0 12px">
+    <div class="highlight">
+      <div class="highlight-label">Be ready at the door</div>
+      <div class="highlight-val">6:10 PM</div>
+      <div class="highlight-sub">Jeremy drops you at GRR terminal curb by 6:25 PM EDT</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section-label">Your day</div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-body" style="padding-top:16px;padding-bottom:16px">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">6:10 PM<small>EDT</small></div>
+          <div class="tl-spine"><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+          <div class="tl-content"><div class="tl-label">Leave home</div><div class="tl-sub">Jeremy drives — 15 min to GRR. Roads are dry.</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">6:25 PM<small>EDT</small></div>
+          <div class="tl-spine"><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+          <div class="tl-content"><div class="tl-label">Curb drop-off at GRR</div><div class="tl-sub">Terminal front. Carry-on only — straight to security, no bag drop.</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">6:20–<br>6:40 PM<small>EDT</small></div>
+          <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-content"><div class="tl-label">Security — Checkpoint B</div><div class="tl-sub">Standard lane. Spring break Friday — plan for 10–15 min. ID and boarding pass ready.</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">7:02 PM<small>EDT</small></div>
+          <div class="tl-spine"><div class="tl-dot key"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label">Boarding begins — Gate B6</div>
+            <div class="tl-sub">Group 1 / BoardFirst — be at the gate before this time to board first.</div>
+            <div class="chips">
+              <div class="chip green">Gate B6</div>
+              <div class="chip navy">Seat 15E</div>
+              <div class="chip amber">Group 1 / BoardFirst</div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">7:27 PM<small>EDT</small></div>
+          <div class="tl-spine"><div class="tl-dot warn"></div><div class="tl-line"></div></div>
+          <div class="tl-content"><div class="tl-label">Door closes</div><div class="tl-sub">Hard cutoff — must be on board.</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">7:47 PM<small>EDT</small></div>
+          <div class="tl-spine"><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-label">Scheduled departure</div>
+            <div class="tl-sub">Tracking a minor 10-min estimated slip — likely pushes ~7:57 PM. Not an official delay.</div>
+            <div class="tl-badge green">+10 min est. slip · A320neo N379FR</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">~10:49 PM<small>EDT</small></div>
+          <div class="tl-spine"><div class="tl-dot key"></div><div class="tl-line"></div></div>
+          <div class="tl-content"><div class="tl-label">Land at MCO — Orlando</div><div class="tl-sub">Carry-on: no baggage claim. Follow "Ground Transportation" signs down to Level 2 Arrivals.</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">~11:10 PM<small>EDT</small></div>
+          <div class="tl-spine"><div class="tl-dot filled"></div></div>
+          <div class="tl-content"><div class="tl-label">Check in — Marriott</div><div class="tl-sub">~10 min from MCO via shuttle or Uber. Front desk is 24 hours.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TRANSPORT TO HOTEL ── -->
+  <div class="section-label">Getting to the hotel from MCO</div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-header">
+      <div class="card-icon green">🗺️</div>
+      <div class="card-title">From your arrival gate → Marriott</div>
+    </div>
+    <div class="card-body">
+      <p style="font-size:12.5px;color:var(--mid);margin-bottom:14px;line-height:1.5">Hotel is <strong style="color:var(--navy)">1 mile from MCO</strong> on Augusta National Drive. Two easy options below — pick one when you land.</p>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('shuttle')">🚐 Free Hotel Shuttle</button>
+        <button class="tab-btn" onclick="switchTab('uber')">🚗 Uber</button>
+      </div>
+
+      <!-- SHUTTLE PANE -->
+      <div class="tab-pane active" id="tab-shuttle">
+        <div class="opt-header">
+          <div class="opt-icon">🚐</div>
+          <div>
+            <div class="opt-title">Marriott Airport Shuttle</div>
+            <div style="font-size:11.5px;color:var(--mid)">Free · 24 hours · ~5-10 min wait · ~10 min ride</div>
+          </div>
+          <div class="opt-badge free">FREE</div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Exit the plane, follow signs</div>
+              <div class="step-sub">Look for "Baggage Claim / Ground Transportation" — follow the crowd heading down.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Go DOWN to Level 2 — Arrivals</div>
+              <div class="step-sub">Take the escalator or elevator down. You want the Arrivals level, not Departures. Signs will say "Ground Transportation."</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Walk through Baggage Claim</div>
+              <div class="step-sub">You have carry-on — don't stop. Walk straight through toward the exit doors.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Exit to Level 2 Arrivals Curb</div>
+              <div class="step-sub">Through the sliding glass doors. Note what numbered post sign you're near — they run left to right along the curb.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-title">Call the hotel — tap below</div>
+              <div class="step-sub">Tell them: "I'm at MCO Level 2 Arrivals, confirmation 82320765." They'll dispatch the van.</div>
+              <div class="step-tip">You can call right as you're walking off the plane so it's waiting</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-body">
+              <div class="step-title">Board the Marriott van</div>
+              <div class="step-sub">Look for the white Marriott Airport Lakeside shuttle. ~10 min ride to hotel. Free.</div>
+            </div>
+          </div>
+        </div>
+        <a href="tel:+14078519000" class="phone-link">
+          <div class="phone-link-icon">📞</div>
+          <div class="phone-link-text">
+            <div class="phone-link-label">Tap to call hotel shuttle</div>
+            <div class="phone-link-num">407-851-9000</div>
+            <div class="phone-link-sub">Available 24 hrs · Level 2 Arrivals curb</div>
+          </div>
+          <div style="font-size:20px;color:var(--blue)">›</div>
+        </a>
+      </div>
+
+      <!-- UBER PANE -->
+      <div class="tab-pane" id="tab-uber">
+        <div class="opt-header">
+          <div class="opt-icon">🚗</div>
+          <div>
+            <div class="opt-title">Uber / Lyft</div>
+            <div style="font-size:11.5px;color:var(--mid)">~$10–15 · 5 min ride · 5–15 min wait</div>
+          </div>
+          <div class="opt-badge paid">~$12</div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num uber">1</div>
+            <div class="step-body">
+              <div class="step-title">Exit the plane, follow signs</div>
+              <div class="step-sub">Follow "Baggage Claim / Ground Transportation" signs heading down toward arrivals level.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num uber">2</div>
+            <div class="step-body">
+              <div class="step-title">Go DOWN to Level 2 — Arrivals</div>
+              <div class="step-sub">Escalator or elevator. Arriving after 9 PM: Level 3 is also available and sometimes less crowded — look for "Ride App Pickup" signs on both levels.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num uber">3</div>
+            <div class="step-body">
+              <div class="step-title">Walk through Baggage Claim</div>
+              <div class="step-sub">Carry-on only — keep moving. Exit through the sliding doors to the curb.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num uber">4</div>
+            <div class="step-body">
+              <div class="step-title">Find the "Ride App Pickup" signs</div>
+              <div class="step-sub">Orange and black signs along the Level 2 curb. MCO runs a FIFO system — your driver will be dispatched from the staging area once you request.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num uber">5</div>
+            <div class="step-body">
+              <div class="step-title">Open Uber and request your ride</div>
+              <div class="step-sub">The app will detect you're at MCO and route pickup to Level 2. Note your post number — share with the driver via the app chat so they can find you quickly.</div>
+              <div class="step-tip">Late-night (~11 PM) usually has good driver availability at MCO</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num uber">6</div>
+            <div class="step-body">
+              <div class="step-title">Set destination: Marriott Orlando Airport Lakeside</div>
+              <div class="step-sub">7499 Augusta National Drive, Orlando, FL 32822 — exactly 1 mile. ~5 min ride.</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#f8f9fa;border-radius:var(--r-sm);padding:10px 12px;margin-top:10px;border:1px solid var(--border)">
+          <div style="font-size:11px;color:var(--mid);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Destination address</div>
+          <div style="font-size:13px;font-family:'DM Mono',monospace;color:var(--navy)">7499 Augusta National Dr<br>Orlando, FL 32822</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOTEL -->
+  <div class="section-label">Hotel</div>
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-header">
+      <div class="card-icon green">🏨</div>
+      <div class="card-title">Marriott Orlando Airport Lakeside</div>
+    </div>
+    <div class="card-body">
+      <div class="row"><div class="row-label">Address</div><div class="row-value">7499 Augusta National Dr<br>Orlando, FL 32822</div></div>
+      <div class="row"><div class="row-label">Confirmation</div><div class="row-value mono">82320765</div></div>
+      <div class="row"><div class="row-label">Check-in</div><div class="row-value">Fri Apr 3 · from 3 PM<br><span style="color:var(--mid);font-size:11.5px;font-weight:400">Arriving ~11 PM — 24hr front desk</span></div></div>
+      <div class="row"><div class="row-label">Check-out</div><div class="row-value">Sat Apr 4 · by 12 PM</div></div>
+      <div class="row"><div class="row-label">Guest name</div><div class="row-value">Lisa Tesch</div></div>
+    </div>
+  </div>
+
+  <!-- ── WEATHER ── -->
+  <div class="section-label">Weather</div>
+
+  <!-- DEPARTURE WINDOW -->
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-header">
+      <div class="card-icon green">🌤</div>
+      <div class="card-title">Friday Departure Window — Grand Rapids</div>
+    </div>
+    <div class="card-body">
+      <p class="wx-narrative">The timing on this could not be better. Tonight's storm system — a significant one that brought severe thunderstorm and tornado watch conditions south of I-96 this evening — exits West Michigan by 3–4 AM tomorrow. <em>Your entire departure window is dry.</em> Friday afternoon will be the best weather day of the week here: partly sunny, mid-50s, light west wind, zero precipitation from morning through 7 PM.</p>
+      <p class="wx-narrative">Rain resumes around <span class="warn">8 PM</span> — roughly the same time wheels leave the runway at GRR. Jeremy drives home into light drizzle. You're gone before it gets interesting again.</p>
+
+      <!-- HOURLY STRIP: Friday -->
+      <div style="font-size:11px;color:var(--mid);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Friday hourly — GRR</div>
+      <div class="weather-band" style="border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden">
+        <div class="weather-hour">
+          <div class="wh-time">12pm</div>
+          <div class="wh-temp">50°</div>
+          <div class="wh-icon">☁️</div>
+          <div class="wh-precip">0%</div>
+        </div>
+        <div class="weather-hour">
+          <div class="wh-time">2pm</div>
+          <div class="wh-temp">52°</div>
+          <div class="wh-icon">⛅</div>
+          <div class="wh-precip">0%</div>
+        </div>
+        <div class="weather-hour">
+          <div class="wh-time">4pm</div>
+          <div class="wh-temp">55°</div>
+          <div class="wh-icon">🌤</div>
+          <div class="wh-precip">0%</div>
+        </div>
+        <div class="weather-hour highlight-hour">
+          <div class="wh-time">6pm ✓</div>
+          <div class="wh-temp">55°</div>
+          <div class="wh-icon">☁️</div>
+          <div class="wh-precip">0%</div>
+        </div>
+        <div class="weather-hour highlight-hour">
+          <div class="wh-time">7pm ✓</div>
+          <div class="wh-temp">54°</div>
+          <div class="wh-icon">☁️</div>
+          <div class="wh-precip">0%</div>
+        </div>
+        <div class="weather-hour rain-hour">
+          <div class="wh-time">8pm</div>
+          <div class="wh-temp">53°</div>
+          <div class="wh-icon">🌧</div>
+          <div class="wh-precip">42%</div>
+        </div>
+        <div class="weather-hour rain-hour">
+          <div class="wh-time">10pm</div>
+          <div class="wh-temp">51°</div>
+          <div class="wh-icon">⛈</div>
+          <div class="wh-precip">42%</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;margin-top:8px;font-size:10.5px">
+        <span style="display:flex;align-items:center;gap:4px;color:var(--green)"><span style="display:inline-block;width:8px;height:8px;background:rgba(45,158,85,.2);border-top:2px solid var(--green-m);border-radius:2px"></span>Your departure window</span>
+        <span style="display:flex;align-items:center;gap:4px;color:var(--blue)"><span style="display:inline-block;width:8px;height:8px;background:rgba(26,111,168,.1);border-top:2px solid var(--blue);border-radius:2px"></span>Rain returns after you go</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCO ARRIVAL WEATHER -->
+  <div class="card" style="margin-bottom:12px">
+    <div class="card-header">
+      <div class="card-icon amber">🌴</div>
+      <div class="card-title">Orlando — Arrival &amp; Weekend Forecast</div>
+    </div>
+    <div class="card-body">
+      <div class="wx-grid" style="margin-bottom:14px">
+        <div class="wx-card">
+          <div class="wx-city">MCO · Fri ~11 PM</div>
+          <div class="wx-temp">72°</div>
+          <div class="wx-desc">Mostly Clear<br>Smooth arrival ✓</div>
+          <div class="wx-row">Wind <span>10 mph E</span></div>
+          <div class="wx-row">Rain <span>3%</span></div>
+        </div>
+        <div class="wx-card">
+          <div class="wx-city">Saturday (checkout)</div>
+          <div class="wx-temp">86°</div>
+          <div class="wx-desc">Sunny ☀️<br>Best day of the trip</div>
+          <div class="wx-row">Wind <span>15 mph E</span></div>
+          <div class="wx-row">Rain <span>13%</span></div>
+        </div>
+      </div>
+
+      <p class="wx-narrative">You land into a clear, warm Orlando night — barely a cloud, 72°F, light east breeze. The shuttle or Uber ride is a non-event. <em>Friday in Orlando is gorgeous</em>: 85°F, mostly sunny, with a slight chance of the typical afternoon sea-breeze storm between 11 AM and 5 PM (20–22% — probably stays south of the city).</p>
+
+      <p class="wx-narrative"><strong>Saturday is the best day:</strong> 86°F, pure sunshine, 10–15 mph east breeze keeping it comfortable. Zero significant rain. This is the day to be outside. The miserable weather is happening in Grand Rapids — <span class="warn">97% storms, thunderstorms all day, nearly an inch of rain</span> — while you're sitting in Florida sunshine. Timing is everything.</p>
+
+      <p class="wx-narrative"><strong>Sunday:</strong> Starts beautiful (87°F, sunny morning), then the cold front that battered Michigan starts pushing south. Afternoon storm chances jump to 53% after 2 PM. If you have outdoor plans Sunday, go in the morning.</p>
+
+      <!-- ORLANDO HOURLY ARRIVAL STRIP -->
+      <div style="font-size:11px;color:var(--mid);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Friday evening MCO — arrival window</div>
+      <div class="weather-band" style="border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;margin-bottom:0">
+        <div class="weather-hour">
+          <div class="wh-time">7pm</div>
+          <div class="wh-temp">80°</div>
+          <div class="wh-icon">🌙</div>
+          <div class="wh-precip">6%</div>
+        </div>
+        <div class="weather-hour">
+          <div class="wh-time">8pm</div>
+          <div class="wh-temp">76°</div>
+          <div class="wh-icon">🌙</div>
+          <div class="wh-precip">3%</div>
+        </div>
+        <div class="weather-hour">
+          <div class="wh-time">9pm</div>
+          <div class="wh-temp">74°</div>
+          <div class="wh-icon">⭐</div>
+          <div class="wh-precip">3%</div>
+        </div>
+        <div class="weather-hour highlight-hour">
+          <div class="wh-time">10pm ✈</div>
+          <div class="wh-temp">73°</div>
+          <div class="wh-icon">⭐</div>
+          <div class="wh-precip">3%</div>
+        </div>
+        <div class="weather-hour highlight-hour">
+          <div class="wh-time">11pm 🏨</div>
+          <div class="wh-temp">71°</div>
+          <div class="wh-icon">⭐</div>
+          <div class="wh-precip">3%</div>
+        </div>
+        <div class="weather-hour">
+          <div class="wh-time">Mid</div>
+          <div class="wh-temp">70°</div>
+          <div class="wh-icon">⭐</div>
+          <div class="wh-precip">3%</div>
+        </div>
+        <div class="weather-hour">
+          <div class="wh-time">2am</div>
+          <div class="wh-temp">69°</div>
+          <div class="wh-icon">⭐</div>
+          <div class="wh-precip">3%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEMP CHART -->
+  <div class="wx-chart-wrap" style="margin-bottom:12px">
+    <div class="wx-chart-title">Full trip — high &amp; low temperatures</div>
+    <div class="wx-legend">
+      <div class="wx-legend-item"><div class="wx-swatch" style="background:#2563a8"></div>GRR High</div>
+      <div class="wx-legend-item"><div class="wx-swatch" style="background:#93bbde"></div>GRR Low</div>
+      <div class="wx-legend-item"><div class="wx-swatch" style="background:#c84a24"></div>MCO High</div>
+      <div class="wx-legend-item"><div class="wx-swatch" style="background:#f0a882"></div>MCO Low</div>
+    </div>
+    <div class="chart-container" style="height:220px">
+      <canvas id="tempChart"></canvas>
+    </div>
+  </div>
+
+  <!-- PRECIP CHART -->
+  <div class="wx-chart-wrap" style="margin-bottom:12px">
+    <div class="wx-chart-title">Precipitation probability — GRR vs MCO</div>
+    <div class="wx-legend">
+      <div class="wx-legend-item"><div class="wx-swatch" style="background:#4a90d9"></div>GRR %</div>
+      <div class="wx-legend-item"><div class="wx-swatch" style="background:#e07840"></div>MCO %</div>
+    </div>
+    <div class="chart-container" style="height:200px">
+      <canvas id="precipChart"></canvas>
+    </div>
+    <div style="font-size:11px;color:var(--mid);margin-top:8px;font-style:italic">Saturday: Grand Rapids 97% storms while Orlando is 13% sunny. You're in the right place.</div>
+  </div>
+
+  <!-- HOME WEATHER WARNING -->
+  <div class="section-label">Back home this weekend</div>
+  <div class="return-banner" style="margin-bottom:12px">
+    <div class="return-title">⛈ Saturday in Grand Rapids — stay in Orlando</div>
+    <div class="return-body">While you're checking out Saturday morning in 86°F sunshine, Grand Rapids gets the week's heaviest storm system. Near-certain rainfall (97%), showers and thunderstorms all day, nearly an inch of rain. Cold front arrives Saturday afternoon — high drops from 63°F to 35°F overnight. Sunday feels like March: 43°F, cloudy, 17 mph wind. Monday night brings 27°F with possible rain/snow showers. Jeremy is watching all of it.</div>
+  </div>
+
+  <!-- SATURDAY CHECKOUT NOTE -->
+  <div class="alert-box">
+    <div class="alert-icon">⏰</div>
+    <div class="alert-text"><strong>Saturday checkout tip:</strong> Check-out by 12 PM. Call the shuttle the night before to lock in a time — Saturday is a busy checkout morning at airport hotels. The shuttle returns you to MCO in 10 min.</div>
+  </div>
+
+  <!-- FLIGHT DETAILS -->
+  <div class="section-label">Flight details</div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-header">
+      <div class="card-icon slate">✈️</div>
+      <div class="card-title">F9 3476 · Technical summary</div>
+    </div>
+    <div class="card-body">
+      <div class="row"><div class="row-label">Aircraft</div><div class="row-value">Airbus A320neo<br><span class="mono" style="font-size:11.5px;color:var(--mid)">N379FR · MSN 10510 · Frontier</span><br><span style="font-size:11.5px;color:var(--mid);font-weight:400">Delivered Mar 2021 · ~5 years old</span></div></div>
+      <div class="row"><div class="row-label">Gate / Seat</div><div class="row-value">Gate B6 · Seat 15E</div></div>
+      <div class="row"><div class="row-label">Boarding group</div><div class="row-value">Group 1 / BoardFirst</div></div>
+      <div class="row"><div class="row-label">Confirmation</div><div class="row-value mono">VYNMHL</div></div>
+      <div class="row"><div class="row-label">Baggage</div><div class="row-value">Carry-on only ✓</div></div>
+      <div class="row"><div class="row-label">Status</div><div class="row-value green">On Time<br><span style="color:var(--mid);font-size:11.5px;font-weight:400">+10 min est. slip tracking · not official</span></div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <strong>Brief prepared by Jeremy</strong> · Thu Apr 2, 2026 at 9:30 PM EDT<br>
+    Flight: FlightStats + Flightradar24 · Weather: NWS API + Open-Meteo<br>
+    <span style="color:#b0bbc5">Have a great trip ✈️</span>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// Tab switcher
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Shared chart defaults
+const chartDefaults = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + (ctx.dataset.label.includes('%') ? '%' : '°F') } } },
+  scales: {
+    x: { grid: { display: false }, ticks: { color: '#94a3b0', font: { size: 11 } } },
+    y: { grid: { color: 'rgba(148,163,176,0.15)' }, ticks: { color: '#94a3b0', font: { size: 11 } } }
+  }
+};
+
+const labels = ['Thu Apr 2\n(tonight)', 'Fri Apr 3\n(departure)', 'Sat Apr 4\n(checkout)', 'Sun Apr 5', 'Mon Apr 6', 'Tue Apr 7'];
+
+// TEMP CHART
+new Chart(document.getElementById('tempChart'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      { label: 'GRR High', data: [64, 57, 63, 43, 46, 43], borderColor: '#2563a8', backgroundColor: 'rgba(37,99,168,.08)', borderWidth: 2, tension: .3, pointRadius: 4, pointBackgroundColor: '#2563a8', fill: false },
+      { label: 'GRR Low',  data: [46, 46, 35, 32, 27, 28], borderColor: '#93bbde', backgroundColor: 'rgba(147,187,222,.08)', borderWidth: 2, tension: .3, pointRadius: 4, pointBackgroundColor: '#93bbde', fill: false, borderDash: [4,3] },
+      { label: 'MCO High', data: [73, 85, 86, 87, 85, 76], borderColor: '#c84a24', backgroundColor: 'rgba(200,74,36,.08)', borderWidth: 2, tension: .3, pointRadius: 4, pointBackgroundColor: '#c84a24', fill: false },
+      { label: 'MCO Low',  data: [67, 67, 66, 66, 64, 61], borderColor: '#f0a882', backgroundColor: 'rgba(240,168,130,.08)', borderWidth: 2, tension: .3, pointRadius: 4, pointBackgroundColor: '#f0a882', fill: false, borderDash: [4,3] },
+    ]
+  },
+  options: { ...chartDefaults, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, min: 20, max: 95, ticks: { ...chartDefaults.scales.y.ticks, callback: v => v + '°F' } } } }
+});
+
+// PRECIP CHART
+new Chart(document.getElementById('precipChart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [
+      { label: 'GRR %', data: [84, 3, 97, 2, 30, 5], backgroundColor: ctx => ctx.raw >= 80 ? 'rgba(37,99,168,.85)' : 'rgba(74,144,217,.65)', borderRadius: 4, borderSkipped: false },
+      { label: 'MCO %', data: [13, 22, 13, 53, 52, 78], backgroundColor: ctx => ctx.raw >= 60 ? 'rgba(192,64,24,.8)' : 'rgba(224,120,64,.6)', borderRadius: 4, borderSkipped: false },
+    ]
+  },
+  options: {
+    ...chartDefaults,
+    scales: {
+      ...chartDefaults.scales,
+      x: { ...chartDefaults.scales.x, grouped: true },
+      y: { ...chartDefaults.scales.y, min: 0, max: 100, ticks: { ...chartDefaults.scales.y.ticks, callback: v => v + '%' } }
+    }
+  }
+});
+</script>
+</body>
+</html>
