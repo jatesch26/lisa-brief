@@ -707,110 +707,211 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--navy);min
       </div>
 
 
-      <!-- MCO RAINFALL CHART -->
-      <div style="margin-bottom:12px">
-        <div style="font-size:11px;color:var(--mid);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">📊 Orlando Daily Rainfall Estimate (Open-Meteo baseline + NWS probability)</div>
-        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 10px 8px 10px">
-          <canvas id="mcoRainfallChart" style="width:100%;max-height:200px"></canvas>
+      <!-- MCO RAINFALL CHART v2 -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;color:var(--mid);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">📊 Orlando Rainfall Forecast — Fri Apr 3 through Thu Apr 9</div>
+
+        <!-- Legend row -->
+        <div style="display:flex;gap:16px;margin-bottom:8px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--body)">
+            <div style="width:12px;height:12px;border-radius:2px;background:#27ae60"></div> Light / none
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--body)">
+            <div style="width:12px;height:12px;border-radius:2px;background:#f39c12"></div> Moderate
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--body)">
+            <div style="width:12px;height:12px;border-radius:2px;background:#c0392b"></div> Heavy ⚠️
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--body)">
+            <div style="width:24px;height:2px;background:#2980b9;margin:5px 0"></div> NWS chance %
+          </div>
         </div>
-        <div style="font-size:10px;color:var(--mid);margin-top:4px;line-height:1.5">
-          Open-Meteo baseline model run · NWS probability % shown above bars · <strong style="color:#c0392b">⚠️ AFD warns locally 6+ inches possible if front stalls Tue–Wed</strong><br>
-          Lisa departs Apr 9 · Jeremy departs Apr 7 · These are model estimates, not guarantees
+
+        <!-- Chart canvas - taller, more room -->
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 12px 10px 12px">
+          <canvas id="mcoRainfallChart2" height="180"></canvas>
+        </div>
+
+        <!-- Below chart: day-by-day callout tiles -->
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px">
+          <div style="text-align:center;padding:5px 2px;border-radius:4px;background:#f0f7f0;border:1px solid #c3e6d0">
+            <div style="font-size:9px;color:#666;font-weight:600">FRI</div>
+            <div style="font-size:10px;font-weight:700;color:#27ae60">0.00"</div>
+            <div style="font-size:9px;color:#888">8%</div>
+            <div style="font-size:8px;color:#27ae60">Clear ✓</div>
+          </div>
+          <div style="text-align:center;padding:5px 2px;border-radius:4px;background:#f0f7f0;border:1px solid #c3e6d0">
+            <div style="font-size:9px;color:#666;font-weight:600">SAT</div>
+            <div style="font-size:10px;font-weight:700;color:#27ae60">0.00"</div>
+            <div style="font-size:9px;color:#888">14%</div>
+            <div style="font-size:8px;color:#27ae60">Best day</div>
+          </div>
+          <div style="text-align:center;padding:5px 2px;border-radius:4px;background:#fffbf0;border:1px solid #ffe082">
+            <div style="font-size:9px;color:#666;font-weight:600">SUN</div>
+            <div style="font-size:10px;font-weight:700;color:#e67e22">0.04"</div>
+            <div style="font-size:9px;color:#888">51%</div>
+            <div style="font-size:8px;color:#e67e22">PM storms</div>
+          </div>
+          <div style="text-align:center;padding:5px 2px;border-radius:4px;background:#fff3e0;border:1px solid #ffcc80">
+            <div style="font-size:9px;color:#666;font-weight:600">MON</div>
+            <div style="font-size:10px;font-weight:700;color:#e67e22">0.50"</div>
+            <div style="font-size:9px;color:#888">68%</div>
+            <div style="font-size:8px;color:#e67e22">Likely</div>
+          </div>
+          <div style="text-align:center;padding:5px 2px;border-radius:4px;background:#fdecea;border:1.5px solid #c0392b">
+            <div style="font-size:9px;color:#666;font-weight:600">TUE ⚠️</div>
+            <div style="font-size:10px;font-weight:700;color:#c0392b">0.89"</div>
+            <div style="font-size:9px;color:#888">76%</div>
+            <div style="font-size:8px;color:#c0392b">JT flies</div>
+          </div>
+          <div style="text-align:center;padding:5px 2px;border-radius:4px;background:#fdecea;border:1px solid #e57373">
+            <div style="font-size:9px;color:#666;font-weight:600">WED ⚠️</div>
+            <div style="font-size:10px;font-weight:700;color:#c0392b">0.08"</div>
+            <div style="font-size:9px;color:#888">60%</div>
+            <div style="font-size:8px;color:#c0392b">Windy</div>
+          </div>
+          <div style="text-align:center;padding:5px 2px;border-radius:4px;background:#f0f7f0;border:1px solid #c3e6d0">
+            <div style="font-size:9px;color:#666;font-weight:600">THU</div>
+            <div style="font-size:10px;font-weight:700;color:#27ae60">0.00"</div>
+            <div style="font-size:9px;color:#888">54%</div>
+            <div style="font-size:8px;color:#27ae60">Lisa flies</div>
+          </div>
+        </div>
+
+        <div style="font-size:10px;color:var(--mid);margin-top:6px;line-height:1.5">
+          Bars = Open-Meteo baseline model · Line = NWS precip probability · <strong style="color:#c0392b">⚠️ NWS AFD warns locally 6+ inches possible if front stalls Tue–Wed (flooding risk)</strong>
         </div>
       </div>
 
       <script>
       (function() {
-        // Wait for Chart.js to be available
         var attempts = 0;
         function tryInit() {
           if (typeof Chart === 'undefined') {
             if (attempts++ < 20) setTimeout(tryInit, 300);
             return;
           }
-          var ctx = document.getElementById('mcoRainfallChart');
+          var ctx = document.getElementById('mcoRainfallChart2');
           if (!ctx) return;
-          
-          var labels = ['Fri Apr 3\n(tonight)', 'Sat Apr 4', 'Sun Apr 5', 'Mon Apr 6', 'Tue Apr 7\n⚠️', 'Wed Apr 8\n⚠️', 'Thu Apr 9\n(Lisa flies)'];
-          var precip =  [0,     0,     0.036, 0.500, 0.886, 0.075, 0];
-          var nwsPct =  [8,     14,    51,    68,    76,    60,    54];
-          
-          // Bar colors: green=light, amber=moderate, red=heavy, highlight Lisa's return
+
+          var labels = ['Fri\nApr 3', 'Sat\nApr 4', 'Sun\nApr 5', 'Mon\nApr 6', 'Tue\nApr 7', 'Wed\nApr 8', 'Thu\nApr 9'];
+          var precip  = [0, 0, 0.036, 0.500, 0.886, 0.075, 0];
+          var nwsPct  = [8, 14, 51, 68, 76, 60, 54];
+
           var barColors = [
-            'rgba(46,125,50,0.7)',    // Fri - clear
-            'rgba(46,125,50,0.7)',    // Sat - clear  
-            'rgba(241,196,15,0.8)',   // Sun - slight
-            'rgba(230,126,34,0.85)', // Mon - moderate
-            'rgba(192,57,43,0.9)',   // Tue - heavy ⚠️
-            'rgba(231,76,60,0.7)',   // Wed - moderate-heavy
-            'rgba(46,125,50,0.7)',   // Thu Lisa - clear
+            '#27ae60', '#27ae60',
+            '#f39c12',
+            '#e67e22',
+            '#c0392b',
+            '#e74c3c',
+            '#27ae60'
           ];
-          
-          var borderColors = barColors.map(c => c.replace(/[\d.]+\)$/, '1)'));
+
+          // Plugin to draw data labels on bars
+          var datalabelsPlugin = {
+            id: 'barLabels',
+            afterDatasetsDraw: function(chart) {
+              var ctx2 = chart.ctx;
+              chart.data.datasets.forEach(function(dataset, i) {
+                if (i !== 0) return; // only bars
+                var meta = chart.getDatasetMeta(i);
+                meta.data.forEach(function(bar, index) {
+                  var val = dataset.data[index];
+                  if (val === 0) return;
+                  ctx2.save();
+                  ctx2.fillStyle = '#333';
+                  ctx2.font = 'bold 10px sans-serif';
+                  ctx2.textAlign = 'center';
+                  ctx2.textBaseline = 'bottom';
+                  ctx2.fillText(val.toFixed(2) + '"', bar.x, bar.y - 2);
+                  ctx2.restore();
+                });
+              });
+            }
+          };
 
           new Chart(ctx, {
             type: 'bar',
+            plugins: [datalabelsPlugin],
             data: {
               labels: labels,
               datasets: [{
-                label: 'Est. rainfall (inches)',
+                label: 'Est. rainfall (in)',
                 data: precip,
                 backgroundColor: barColors,
-                borderColor: borderColors,
-                borderWidth: 1.5,
-                borderRadius: 3,
-                yAxisID: 'y'
+                borderColor: barColors.map(c => c),
+                borderWidth: 1,
+                borderRadius: 4,
+                yAxisID: 'y',
+                order: 2
               }, {
-                label: 'NWS precip %',
+                label: 'NWS chance %',
                 data: nwsPct,
                 type: 'line',
-                borderColor: 'rgba(52,152,219,0.9)',
-                backgroundColor: 'rgba(52,152,219,0.1)',
-                borderWidth: 2,
-                pointBackgroundColor: 'rgba(52,152,219,1)',
-                pointRadius: 4,
-                tension: 0.3,
-                fill: false,
-                yAxisID: 'y2'
+                borderColor: '#2980b9',
+                backgroundColor: 'rgba(41,128,185,0.08)',
+                borderWidth: 2.5,
+                pointBackgroundColor: '#2980b9',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 1.5,
+                pointRadius: 5,
+                tension: 0.35,
+                fill: true,
+                yAxisID: 'y2',
+                order: 1
               }]
             },
             options: {
               responsive: true,
-              maintainAspectRatio: true,
-              aspectRatio: 2.8,
+              maintainAspectRatio: false,
               plugins: {
-                legend: {
-                  display: true,
-                  position: 'top',
-                  labels: { font: { size: 10 }, boxWidth: 12, padding: 8 }
-                },
+                legend: { display: false },
                 tooltip: {
                   callbacks: {
-                    label: function(ctx) {
-                      if (ctx.datasetIndex === 0) return ' Rainfall: ' + ctx.raw.toFixed(2) + '"';
-                      return ' NWS precip: ' + ctx.raw + '%';
+                    title: function(items) {
+                      var labels2 = ['Fri Apr 3','Sat Apr 4','Sun Apr 5','Mon Apr 6','Tue Apr 7','Wed Apr 8','Thu Apr 9'];
+                      return labels2[items[0].dataIndex];
+                    },
+                    label: function(ctx2) {
+                      if (ctx2.datasetIndex === 0) return ' Rainfall: ' + ctx2.raw.toFixed(3) + '"';
+                      return ' NWS: ' + ctx2.raw + '% chance';
                     }
                   }
-                },
-                annotation: {}
+                }
               },
               scales: {
                 x: {
-                  ticks: { font: { size: 9 }, maxRotation: 0, autoSkip: false },
+                  ticks: {
+                    font: { size: 10, weight: '600' },
+                    maxRotation: 0,
+                    autoSkip: false,
+                    color: function(ctx3) {
+                      var i = ctx3.index;
+                      return (i === 4 || i === 5) ? '#c0392b' : '#555';
+                    }
+                  },
                   grid: { display: false }
                 },
                 y: {
                   position: 'left',
-                  title: { display: true, text: 'inches', font: { size: 9 } },
-                  ticks: { font: { size: 9 }, callback: v => v.toFixed(2) + '"' },
-                  max: 1.2,
+                  title: { display: true, text: 'inches', font: { size: 10 }, color: '#555' },
+                  ticks: {
+                    font: { size: 10 },
+                    callback: function(v) { return v.toFixed(2) + '"'; },
+                    color: '#555'
+                  },
+                  max: 1.1,
                   beginAtZero: true,
-                  grid: { color: 'rgba(0,0,0,0.06)' }
+                  grid: { color: 'rgba(0,0,0,0.05)' }
                 },
                 y2: {
                   position: 'right',
-                  title: { display: true, text: 'NWS %', font: { size: 9 } },
-                  ticks: { font: { size: 9 }, callback: v => v + '%' },
+                  title: { display: true, text: 'NWS chance', font: { size: 10 }, color: '#2980b9' },
+                  ticks: {
+                    font: { size: 10 },
+                    callback: function(v) { return v + '%'; },
+                    color: '#2980b9'
+                  },
                   max: 100,
                   beginAtZero: true,
                   grid: { display: false }
