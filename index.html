@@ -706,6 +706,123 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--navy);min
         </div>
       </div>
 
+
+      <!-- MCO RAINFALL CHART -->
+      <div style="margin-bottom:12px">
+        <div style="font-size:11px;color:var(--mid);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">📊 Orlando Daily Rainfall Estimate (Open-Meteo baseline + NWS probability)</div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 10px 8px 10px">
+          <canvas id="mcoRainfallChart" style="width:100%;max-height:200px"></canvas>
+        </div>
+        <div style="font-size:10px;color:var(--mid);margin-top:4px;line-height:1.5">
+          Open-Meteo baseline model run · NWS probability % shown above bars · <strong style="color:#c0392b">⚠️ AFD warns locally 6+ inches possible if front stalls Tue–Wed</strong><br>
+          Lisa departs Apr 9 · Jeremy departs Apr 7 · These are model estimates, not guarantees
+        </div>
+      </div>
+
+      <script>
+      (function() {
+        // Wait for Chart.js to be available
+        var attempts = 0;
+        function tryInit() {
+          if (typeof Chart === 'undefined') {
+            if (attempts++ < 20) setTimeout(tryInit, 300);
+            return;
+          }
+          var ctx = document.getElementById('mcoRainfallChart');
+          if (!ctx) return;
+          
+          var labels = ['Fri Apr 3\n(tonight)', 'Sat Apr 4', 'Sun Apr 5', 'Mon Apr 6', 'Tue Apr 7\n⚠️', 'Wed Apr 8\n⚠️', 'Thu Apr 9\n(Lisa flies)'];
+          var precip =  [0,     0,     0.036, 0.500, 0.886, 0.075, 0];
+          var nwsPct =  [8,     14,    51,    68,    76,    60,    54];
+          
+          // Bar colors: green=light, amber=moderate, red=heavy, highlight Lisa's return
+          var barColors = [
+            'rgba(46,125,50,0.7)',    // Fri - clear
+            'rgba(46,125,50,0.7)',    // Sat - clear  
+            'rgba(241,196,15,0.8)',   // Sun - slight
+            'rgba(230,126,34,0.85)', // Mon - moderate
+            'rgba(192,57,43,0.9)',   // Tue - heavy ⚠️
+            'rgba(231,76,60,0.7)',   // Wed - moderate-heavy
+            'rgba(46,125,50,0.7)',   // Thu Lisa - clear
+          ];
+          
+          var borderColors = barColors.map(c => c.replace(/[\d.]+\)$/, '1)'));
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Est. rainfall (inches)',
+                data: precip,
+                backgroundColor: barColors,
+                borderColor: borderColors,
+                borderWidth: 1.5,
+                borderRadius: 3,
+                yAxisID: 'y'
+              }, {
+                label: 'NWS precip %',
+                data: nwsPct,
+                type: 'line',
+                borderColor: 'rgba(52,152,219,0.9)',
+                backgroundColor: 'rgba(52,152,219,0.1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(52,152,219,1)',
+                pointRadius: 4,
+                tension: 0.3,
+                fill: false,
+                yAxisID: 'y2'
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              aspectRatio: 2.8,
+              plugins: {
+                legend: {
+                  display: true,
+                  position: 'top',
+                  labels: { font: { size: 10 }, boxWidth: 12, padding: 8 }
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(ctx) {
+                      if (ctx.datasetIndex === 0) return ' Rainfall: ' + ctx.raw.toFixed(2) + '"';
+                      return ' NWS precip: ' + ctx.raw + '%';
+                    }
+                  }
+                },
+                annotation: {}
+              },
+              scales: {
+                x: {
+                  ticks: { font: { size: 9 }, maxRotation: 0, autoSkip: false },
+                  grid: { display: false }
+                },
+                y: {
+                  position: 'left',
+                  title: { display: true, text: 'inches', font: { size: 9 } },
+                  ticks: { font: { size: 9 }, callback: v => v.toFixed(2) + '"' },
+                  max: 1.2,
+                  beginAtZero: true,
+                  grid: { color: 'rgba(0,0,0,0.06)' }
+                },
+                y2: {
+                  position: 'right',
+                  title: { display: true, text: 'NWS %', font: { size: 9 } },
+                  ticks: { font: { size: 9 }, callback: v => v + '%' },
+                  max: 100,
+                  beginAtZero: true,
+                  grid: { display: false }
+                }
+              }
+            }
+          });
+        }
+        tryInit();
+      })();
+      </script>
+
       <p class="wx-narrative" style="margin-bottom:10px"><strong>What's driving it:</strong> A cold front stalls near central Florida Monday–Tuesday while a subtropical jet sets up over the Gulf. The NWS notes broad synoptic-scale lift is possible as Florida sits in the left-forward quadrant of the jet — a setup that can produce enhanced rainfall and prolonged storm coverage. Guidance confidence is low, but multiple models agree on the basic pattern.</p>
 
       <p class="wx-narrative" style="margin-bottom:10px"><strong>Wednesday winds:</strong> The stronger continental high sitting north of Florida tightens the pressure gradient behind the front, driving progressively stronger NE onshore flow. The NWS statistical guidance already gives much of Central Florida a 30–40% chance of 40 mph gusts Wednesday. Coastal and beach impacts are likely.</p>
